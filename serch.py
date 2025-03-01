@@ -1,24 +1,20 @@
-import tempfile
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 async def get_basketball_matches():
-    # Создаем уникальную директорию для данных пользователя
-    user_data_dir = tempfile.mkdtemp()
-
     # Настройка Selenium WebDriver
     options = webdriver.ChromeOptions()
-    options.add_argument(f"user-data-dir={user_data_dir}")  # Указываем уникальную директорию
-
-    # Опционально: запуск браузера в фоновом режиме (без графического интерфейса)
-    # options.add_argument("--headless")
-
+    options.add_argument("--headless")  # Запуск без отображения окна браузера
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
+
     try:
+        #driver.set_window_size(3840, 2160)  # Уменьшает размер окна в 2 раза
+
         driver.get("https://winline.ru/live")
         time.sleep(3)  # Даем время сайту загрузиться
         driver.execute_script("document.body.style.zoom='50%'")
@@ -51,6 +47,7 @@ async def get_basketball_matches():
         # Сохраняем HTML в файл
         with open("champ_list.html", "w", encoding="utf-8") as file:
             file.write(html_content)
+
 
     finally:
         driver.quit()
