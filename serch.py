@@ -9,6 +9,9 @@ async def get_basketball_matches():
     # Настройка Selenium WebDriver
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")  # Запуск без отображения окна браузера
+    options.add_argument("--disable-gpu")  # Отключаем GPU для работы в headless
+    options.add_argument(
+        "--no-sandbox")  # Отключаем sandbox (если это нужно)
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 
