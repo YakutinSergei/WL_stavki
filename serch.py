@@ -1,3 +1,5 @@
+import tempfile
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -10,6 +12,9 @@ async def get_basketball_matches():
     options = webdriver.ChromeOptions()
     #options.add_argument("--headless")  # Запуск без отображения окна браузера
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    # Указываем уникальную директорию для данных пользователя
+    user_data_dir = tempfile.mkdtemp()  # Создаём временную директорию
+    options.add_argument(f"user-data-dir={user_data_dir}")
 
     try:
         #driver.set_window_size(3840, 2160)  # Уменьшает размер окна в 2 раза
